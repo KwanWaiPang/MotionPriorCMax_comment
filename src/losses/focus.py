@@ -68,8 +68,8 @@ class FocusLoss(TrajectoryLossBase):
         Computes the focus and smoothness losses based on trajectories and events.
 
         Args:
-            trajectories (torch.Tensor): Predicted trajectories.
-            times (torch.Tensor): Time reference points.
+            trajectories (torch.Tensor): Predicted trajectories. 预测的轨迹
+            times (torch.Tensor): Time reference points. 时间参考点
             batch (dict): Dictionary containing the batch data (events, etc.).
 
         Returns:
@@ -84,8 +84,8 @@ class FocusLoss(TrajectoryLossBase):
         traj_at_tmid = trajectories[:, self.num_tref:]
         
         flow_lut, flow_to_next = self.interpolate_flow(traj_at_tref, traj_at_tmid)
-        warped = self.warp_events(events, flow_lut)
-        iwes = self.make_iwes(warped, t_ref, num_pos_events)
+        warped = self.warp_events(events, flow_lut)#将事件进行warp
+        iwes = self.make_iwes(warped, t_ref, num_pos_events)#这个应该只是获取iwes图片
 
         focus_loss = utils.calculate_focus_loss(iwes, loss_type='gradient_magnitude',
                                                 norm=self.focus_loss_norm)
@@ -188,10 +188,10 @@ class FocusLoss(TrajectoryLossBase):
         differences = flow_lut[ib, it, iy, ix]
         differences = differences.permute(0, 2, 1, 3)
 
-        warped = differences + events[:, None, :, :2]  
+        warped = differences + events[:, None, :, :2]  #直接相加，而并不是乘以时间~
         tp = events[:, None, :, 2:]
         tp = tp.expand(-1, self.num_tref, -1, -1)
-        warped = torch.cat((warped, tp), dim=3)
+        warped = torch.cat((warped, tp), dim=3)#将时间信息加入到warped中
         return warped
 
     def make_iwes(self, warped, t_ref, num_pos_events):

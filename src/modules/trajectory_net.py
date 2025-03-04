@@ -149,7 +149,7 @@ class TrajectoryNet(pl.LightningModule):
         if len(coeff_grid.shape) == 4:
             coeff_grid = coeff_grid[:, None]
 
-        reconstruction_times = self.loss_calculator.get_reconstruction_times(coeff_grid.device)
+        reconstruction_times = self.loss_calculator.get_reconstruction_times(coeff_grid.device)#获取重建时间
         trajectories = self.calculate_trajectories_at_t(coeff_grid, reconstruction_times,
                                                         mask, self.loss_calculator.is_needing_offsets)
 

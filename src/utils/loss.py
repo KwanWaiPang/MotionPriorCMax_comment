@@ -4,9 +4,9 @@ import torch.nn.functional as F
 def calculate_focus_loss(iwes: torch.Tensor, loss_type: str = 'variance',
                          norm: str = 'l2'):
     if loss_type == 'variance':
-        val = calculate_image_variance(iwes)
+        val = calculate_image_variance(iwes)#方差
     elif loss_type == 'gradient_magnitude':
-        val = calculate_gradient_magnitude(iwes, norm=norm)
+        val = calculate_gradient_magnitude(iwes, norm=norm)#梯度
     else:
         raise ValueError
     return 1 / val

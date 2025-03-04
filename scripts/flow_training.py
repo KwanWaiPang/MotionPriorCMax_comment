@@ -86,7 +86,7 @@ def main():
         logger = loggers.TensorBoardLogger(save_dir=save_dir, name="MotionPriorCM")
 
     error_calculator = ErrorCalculatorFactory.get_error_calculator(dataset_name)
-    loss_calculator = LossFactory.get_loss_calculator(loss_name, loss_config)
+    loss_calculator = LossFactory.get_loss_calculator(loss_name, loss_config)#注册loss计算的类
 
     # Model setup
     if args.ckp_path is None:

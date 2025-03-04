@@ -12,3 +12,8 @@
   <div align="center"></div>
 
 <!-- rm -rf .git -->
+
+* 在dsec数据集上训练的代码
+~~~
+python scripts/flow_training.py --gpus 0 1 --config config/exe/flow_training/dsec.yaml
+~~~
